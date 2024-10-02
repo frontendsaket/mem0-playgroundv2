@@ -148,10 +148,17 @@ const ChatState = (props: any) => {
     }
   };
 
-  const deleteChat = async (session_id: string) => {
+  const deleteChat = async (session_id?: string) => {
+    if(!session_id&&!selectedConversation){
+      return;
+    }
+    if(session_id==="delete"){
+      session_id = selectedConversation;
+    }
+
     try {
       setLoadingSelectedChats(true);
-      const response = await fetch(`${url}/api/chat/delete?session_id=${session_id}`, {
+      const response = await fetch(`${url}/api/chat?session_id=${session_id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -164,6 +171,7 @@ const ChatState = (props: any) => {
         setConversation([]);
         setSelectedConversation("");
         setLoadingSelectedChats(false);
+        await getChats();
         return true;
       } else {
         setLoadingSelectedChats(false);

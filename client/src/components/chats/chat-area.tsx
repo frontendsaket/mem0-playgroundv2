@@ -17,6 +17,7 @@ const ChatArea = (props: {
   setExpandRight: React.Dispatch<React.SetStateAction<boolean>>;
   expandLeft: boolean;
   expandRight: boolean;
+  showConfig: boolean;
 }) => {
   const { conversation,selectedConversation, loadingChat, deleteChat, loadingQuestion, loadingSelectedChats, selectedUserid, setSelectedUserid } = useContext(ChatContext);
 
@@ -66,10 +67,11 @@ const ChatArea = (props: {
             <ChevronRight className="h-4 w-4" />
           )}
         </Button>
-        <div className="flex flex-col md:flex-row justify-end gap-2 md:gap-6 mt-2 mb-1 px-6 md:px-2">
+        {props.showConfig&&
+          <div className="flex flex-col md:flex-row justify-end gap-2 md:gap-6 mt-2 mb-1 px-6 md:px-2">
             <div className="flex gap-2">
               {
-                conversation.length > 0 && !loadingChat && selectedConversation != ""&&<Button onClick={()=> deleteChat(selectedConversation)} className="bg-red-600 hover:bg-red-800">Delete Conversation</Button>
+                conversation.length > 0 && !loadingChat && selectedConversation != ""&&<Button onClick={()=> deleteChat(selectedConversation)} className="bg-red-600 hidden md:flex hover:bg-red-800">Delete Conversation</Button>
               }
               
               <input
@@ -86,6 +88,7 @@ const ChatArea = (props: {
               <SearchBar />
             </div>
           </div>
+        }
         <div className="flex-1 p-4 overflow-auto" ref={scrollRef}>
           { loadingSelectedChats&&
             <div className="flex justify-center"> 
@@ -93,7 +96,7 @@ const ChatArea = (props: {
             </div>
           }
           <div className="mb-4">
-            {conversation.length === 0 && !loadingChat && !loadingSelectedChats && <ChatDefault name="Saket Aryan" />}
+            {conversation.length === 0 && !loadingChat && !loadingSelectedChats && <ChatDefault name="Mem0" />}
             {conversation.map((item: ChatPairInterface, index: number) => {
               return (
                 <div key={index}>
