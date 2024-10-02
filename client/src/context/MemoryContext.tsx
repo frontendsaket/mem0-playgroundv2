@@ -120,7 +120,7 @@ const MemoryState = (props: any) => {
   }
 
   return (
-    <MemoryContext.Provider value={{ getMemories,getFirstMemories, memories, updateMemory, deleteMemory,deleteMemories, loadingMemories }}>
+    <MemoryContext.Provider value={{ getMemories,getFirstMemories,setMemories, memories, updateMemory, deleteMemory,deleteMemories, loadingMemories }}>
       {props.children}
     </MemoryContext.Provider>
   );

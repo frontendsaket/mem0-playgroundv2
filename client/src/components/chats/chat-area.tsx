@@ -11,6 +11,7 @@ import ChatPairLoading from "./chat-pair-loading";
 import Spinner from "../shared/spinner";
 import SearchBar from "./search-bar";
 import { RxCross2 } from "react-icons/rx";
+import {motion} from "framer-motion";
 
 const ChatArea = (props: {
   setExpandLeft: React.Dispatch<React.SetStateAction<boolean>>;
@@ -71,7 +72,14 @@ const ChatArea = (props: {
           <div className="flex flex-col md:flex-row justify-end gap-2 md:gap-6 mt-2 mb-1 px-6 md:px-2">
             <div className="flex gap-2">
               {
-                conversation.length > 0 && !loadingChat && selectedConversation != ""&&<Button onClick={()=> deleteChat(selectedConversation)} className="bg-red-600 hidden md:flex hover:bg-red-800">Delete Conversation</Button>
+                conversation.length > 0 && !loadingChat && selectedConversation != ""&&
+                <motion.div
+                initial={{scale: 0.5}}
+                animate={{scale: 1}}
+                transition={{duration: 0.2}}
+                >
+                  <Button onClick={()=> deleteChat(selectedConversation)} className="bg-red-600 hidden md:flex hover:bg-red-800">Delete Conversation</Button>
+                </motion.div>
               }
               
               <input

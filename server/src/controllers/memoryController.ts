@@ -47,7 +47,7 @@ const addMemory = async (req: CustomRequest, res: Response) => {
       headers: { Authorization: TOKEN, "Content-Type": "application/json" },
       body: JSON.stringify({
         user_id: user.userId,
-        messages: messages,
+        messages: messages
       }),
     };
     const response = await fetch(`https://api.mem0.ai/v1/memories/`, options);

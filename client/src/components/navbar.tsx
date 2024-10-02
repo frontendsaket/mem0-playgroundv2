@@ -3,17 +3,21 @@ import { Button } from "./ui/button";
 import { useContext } from "react";
 import GlobalContext from "@/context/GlobalContext";
 import ChatContext from "@/context/ChatContext";
+import MemoryContext from "@/context/MemoryContext";
 
 const Navbar = () => {
 
   const {logged, logout} = useContext(GlobalContext);
-  const {setSelectedConversation, setConversation} = useContext(ChatContext);
+  const {setSelectedConversation, setConversation, setConversations} = useContext(ChatContext);
+  const {setMemories} = useContext(MemoryContext);
   const navigate = useNavigate();
 
   const handleLogout = ()=> {
     logout();
     setSelectedConversation("");
     setConversation([]);
+    setConversations([]);
+    setMemories([]);
     navigate("/login");
   }
 

@@ -213,7 +213,8 @@ const ChatState = (props: any) => {
         setConversation,
         deleteAllChats,
         deleteChat,
-        getFirstChats
+        getFirstChats,
+        setConversations
       }}
     >
       {props.children}
