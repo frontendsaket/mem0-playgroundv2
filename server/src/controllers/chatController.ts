@@ -233,4 +233,49 @@ const getConversation = async (req: CustomRequest, res: Response) => {
   }
 };
 
-export { sendChat, getConversations, getConversation };
+const deleteAllConversations = async (req: CustomRequest, res: Response) => {
+  let success = false;
+  try {
+    let user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(400).json({ success, error: "User not found!" });
+    }
+
+    await Conversation.deleteMany({ userId: user.userId });
+
+    success = true;
+    return res.json({ success, message: "All conversations deleted successfully!" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ success, error: "Internal Server Error!" });
+  }
+};
+
+const deleteConversation = async (req: CustomRequest, res: Response) => {
+  let success = false;
+  const { session_id } = req.query;
+  try {
+    let user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(400).json({ success, error: "User not found!" });
+    }
+
+    const conversation = await Conversation.findOneAndDelete({
+      id: session_id,
+      userId: user.userId,
+    });
+
+    if (!conversation) {
+      return res.status(400).json({ success, error: "Invalid Conversation" });
+    }
+
+    success = true;
+    return res.json({ success, message: "Conversation deleted successfully!" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ success, error: "Internal Server Error!" });
+  }
+};
+
+
+export { sendChat, getConversations, getConversation, deleteAllConversations, deleteConversation };

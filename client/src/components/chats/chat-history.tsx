@@ -5,9 +5,10 @@ import ChatContext from "@/context/ChatContext";
 import { ChatItemInterface } from "@/types/chat-type";
 import { getDateCategory } from "@/utils/helpers";
 import Spinner from "../shared/spinner";
+import { Button } from "../ui/button";
 
 const ChatHistory = (props: { expandLeft: boolean }) => {
-  const { getChats, conversations, newChat, loadingChats } = useContext(ChatContext);
+  const { getChats, conversations, newChat, loadingChats, deleteAllChats } = useContext(ChatContext);
 
   useEffect(() => {
     getChats();
@@ -33,9 +34,15 @@ const ChatHistory = (props: { expandLeft: boolean }) => {
         {!props.expandLeft && (
           <>
           {
+            !loadingChats&&conversations.length===0&&<div className="flex">
+            <h1 className="my-4 mx-auto font-semibold text-[14px]">No Past Conversations Found</h1>
+            </div>
+          }
+          
+          {
             loadingChats&&<Spinner />
           }
-            <div className="calc(h-full-10rem) overflow-scroll">
+            <div className="calc(h-full-14rem) overflow-scroll">
               {/* Today's conversations */}
               {todayConversations.length > 0 && (
                 <>
@@ -91,6 +98,11 @@ const ChatHistory = (props: { expandLeft: boolean }) => {
               )}
             </div>
             <div className="px-2">
+            {
+            !loadingChats&&conversations.length>0&&<div className="flex">
+            <Button onClick={deleteAllChats} className="mx-auto bg-red-600 hover:bg-red-800 my-3">Clear All Conversation</Button>
+            </div>
+          }
               <div className="border border-gray-300 rounded-lg  px-3 py-2 cursor-pointer hover:bg-gray-100">
                 <div onClick={newChat} className="flex justify-center align-middle gap-4">
                   <FaRegEdit size={20} className="my-auto" />

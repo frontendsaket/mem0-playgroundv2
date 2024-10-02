@@ -120,6 +120,62 @@ const ChatState = (props: any) => {
     setSelectedConversation("");
   }
 
+  const deleteAllChats = async () => {
+    try {
+      setLoadingChats(true);
+      const response = await fetch(`${url}/api/chats`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("auth-token") || "",
+        },
+      });
+  
+      const data = await response.json();
+      if (data.success) {
+        setConversations([]);
+        setConversation([])
+        setLoadingChats(false);
+        return true;
+      } else {
+        setLoadingChats(false);
+        return false;
+      }
+    } catch (error) {
+      console.log(error);
+      setLoadingChats(false);
+      return false;
+    }
+  };
+
+  const deleteChat = async (session_id: string) => {
+    try {
+      setLoadingSelectedChats(true);
+      const response = await fetch(`${url}/api/chat/delete?session_id=${session_id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("auth-token") || "",
+        },
+      });
+  
+      const data = await response.json();
+      if (data.success) {
+        setConversation([]);
+        setSelectedConversation("");
+        setLoadingSelectedChats(false);
+        return true;
+      } else {
+        setLoadingSelectedChats(false);
+        return false;
+      }
+    } catch (error) {
+      console.log(error);
+      setLoadingSelectedChats(false);
+      return false;
+    }
+  };
+  
 
   return (
     <ChatContext.Provider
@@ -142,7 +198,9 @@ const ChatState = (props: any) => {
         setSelectedProvider,
         selectedUserid,
         setSelectedUserid,
-        setConversation
+        setConversation,
+        deleteAllChats,
+        deleteChat
       }}
     >
       {props.children}
