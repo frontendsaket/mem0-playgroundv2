@@ -2,31 +2,34 @@ import ChatArea from "@/components/chats/chat-area";
 import ChatHistory from "@/components/chats/chat-history";
 import Memories from "@/components/memories/memories";
 import Menu from "@/components/menu";
-import { useState } from "react";
+import GlobalContext from "@/context/GlobalContext";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [expandLeft, setExpandLeft] = useState(false);
   const [expandRight, setExpandRight] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [showMemories, setShowMemories] = useState(false);
-  // const [showConfig, setShowConfig] = useState(false);
+  const {logged} = useContext(GlobalContext);
 
-  // const handleShowConfig = ()=>{
-  //   setShowConfig(!setShowConfig);
-  //   setShowHistory(false);
-  //   setShowMemories(false);
-  // }
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    if(!logged){
+      navigate("/login")
+    }
+  },[])
+
 
   const handlShowHistory = () => {
     setShowHistory(!showHistory);
     setShowMemories(false);
-    // setShowConfig(false);
   };
 
   const handleShowMemories = () => {
     setShowMemories(!showMemories);
     setShowHistory(false);
-    // setShowConfig(false);
   };
 
 

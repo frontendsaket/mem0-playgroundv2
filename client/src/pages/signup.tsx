@@ -8,10 +8,11 @@ import { Link, useNavigate } from "react-router-dom"
 
 const url = import.meta.env.VITE_URL;
 
-export default function Login() {
+export default function Signup() {
   const [email, setEmail] = useState("")
+  const [name, setName] = useState("")
   const [password, setPassword] = useState("")
-  const { logged, setLogged } = useContext(GlobalContext);
+  const { logged } = useContext(GlobalContext);
   const navigate = useNavigate();
 
   useEffect(()=>{
@@ -22,21 +23,21 @@ export default function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     // Handle login logic here
-    const response = await fetch(`${url}/api/auth/login`, {
+    const response = await fetch(`${url}/api/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             userId: email,
-            password: password}
+            password: password,
+            name: name
+          }
         ),
       });
 
     const data = await response.json();
 
     if(data.success){
-        localStorage.setItem("auth-token", data.authtoken);
-        setLogged(true);
-        navigate("/")
+        navigate("/login")
     }else{
         // ss
     }
@@ -46,8 +47,8 @@ export default function Login() {
     <div className="flex items-center justify-center min-h-screen bg-background">
       <Card className="w-[350px]">
         <CardHeader>
-          <CardTitle>Login</CardTitle>
-          <CardDescription>Enter your credentials to access your account.</CardDescription>
+          <CardTitle>Register</CardTitle>
+          <CardDescription>Register with just a username.</CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4">
@@ -63,6 +64,17 @@ export default function Login() {
               />
             </div>
             <div className="space-y-2">
+              <Label htmlFor="userid">Name</Label>
+              <Input
+                id="name"
+                type="text"
+                placeholder="Saket Aryan"
+                value={email}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
@@ -74,10 +86,10 @@ export default function Login() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button type="submit" className="w-full">Log in</Button>
+            <Button type="submit" className="w-full">Register</Button>
           </CardFooter>
         </form>
-        <h1 className="text-center mb-6 font-semibold text-[14px]">New? <Link className="text-blue-600 underline" to="/signup">SignUp</Link></h1>
+        <h1 className="text-center mb-6 font-semibold text-[14px]">Already a user? <Link className="text-blue-600 underline" to="/login">Login</Link></h1>
       </Card>
     </div>
   )

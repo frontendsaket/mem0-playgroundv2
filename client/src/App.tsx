@@ -7,6 +7,7 @@ import { MemoryState } from "@/context/MemoryContext";
 import { ChatState } from "@/context/ChatContext";
 
 import Login from "@/pages/login";
+import Signup from "./pages/signup";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
             <Route path="*" element={<Home />} />
           </Routes>
       </Router>
