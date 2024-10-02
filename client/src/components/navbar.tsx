@@ -51,7 +51,7 @@ const Navbar = () => {
           <img className="my-auto w-28" src="light.svg" alt="mem0 logo" />
         </Link>
         <div className="my-auto flex gap-10">
-          <h1 className="my-auto font-medium">Docs</h1>
+          <a href="https://docs.mem0.ai/" target="_blank" className="my-auto font-medium">Docs</a>
           {logged ? (
             <Button onClick={handleLogout}>Logout</Button>
           ) : (
