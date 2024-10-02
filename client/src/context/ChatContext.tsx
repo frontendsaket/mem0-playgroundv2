@@ -96,7 +96,7 @@ const ChatState = (props: any) => {
       });
   
       const data = await response.json();
-      console.log(data);
+
       if (data.success) {
         setConversation(data.conversations.messages);
         setSelectedConversation(data.session_id);

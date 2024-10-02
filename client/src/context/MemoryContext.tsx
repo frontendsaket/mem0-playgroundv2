@@ -7,11 +7,19 @@ const MemoryState = (props: any) => {
   const [memories, setMemories] = useState([]);
   const [loadingMemories, setLoadingMemories] = useState(false);
 
-  const getMemories = async (userid: string) => {
+  const getMemories = async () => {
     try {
       setMemories([]);
       setLoadingMemories(true);
-      const response = await fetch(`${url}/api/memory?user_id=${userid}`);
+      const response = await fetch(`${url}/api/memory`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("auth-token") || "",
+          },
+        }
+      );
       const data = await response.json();
 
       if (data.success) {
@@ -35,7 +43,10 @@ const MemoryState = (props: any) => {
     try {
       const response = await fetch(`${url}/api/memory`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("auth-token") || "",
+        },
         body: JSON.stringify({
           memoryid: memoryid,
           text: text,
@@ -44,7 +55,7 @@ const MemoryState = (props: any) => {
       const data = await response.json();
 
       if (data.success) {
-        await getMemories(data.memories.user_id);
+        await getMemories();
         return true;
       } else {
         return false;
@@ -59,12 +70,15 @@ const MemoryState = (props: any) => {
     try {
       const response = await fetch(`${url}/api/memory?memoryid=${memoryid}`, {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("auth-token") || "",
+        },
       });
       const data = await response.json();
 
       if (data.success) {
-        await getMemories("saket");
+        await getMemories();
         return true;
       } else {
         return false;

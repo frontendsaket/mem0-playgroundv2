@@ -11,7 +11,7 @@ const Memories = (props: { expandLeft: boolean; expandRight: boolean }) => {
   const {  getMemories, memories, loadingMemories } = useContext(MemoryContext);
 
   useEffect(()=>{
-    getMemories("saket");
+    getMemories();
   },[])
 
 
