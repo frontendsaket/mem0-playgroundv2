@@ -1,3 +1,5 @@
+import Conversation from "../models/conversation";
+
 interface MessageData {
   id: number;
   question: string;
@@ -46,19 +48,7 @@ function convertMessages(data: MessageData[]): ConvertedMessage[] {
 }
 
 async function generateSessionId(TOKEN: string): Promise<string> {
-  const options: RequestInit = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: TOKEN,
-    },
-  };
-
-  const response = await fetch(
-    `https://api.mem0.ai/api/v1/conversations/`,
-    options
-  );
-  const data: Session[] = await response.json();
+  let data = await Conversation.find({});
 
   const existingIds = data.map((session) => session.id);
 

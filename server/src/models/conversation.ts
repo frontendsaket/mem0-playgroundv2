@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const messageSchema = new mongoose.Schema({
-  id: { type: Number, required: true },
   question: { type: String, required: true },
   answer: { type: String, required: true },
   model: { type: String, default: "mythomax-l2-13b" },
@@ -13,7 +12,7 @@ const messageSchema = new mongoose.Schema({
 const conversationSchema = new mongoose.Schema({
   userId: { type: String, required: true, unique: true },
   agentId: { type: String, unique: true },
-  sessionId: {type: String, unique: true},
+  id: {type: String, unique: true},
   title: { type: String, unique: true },
   createdAt: { type: Date, default: Date.now },
   messages: [messageSchema]

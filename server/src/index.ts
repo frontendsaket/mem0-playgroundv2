@@ -4,9 +4,9 @@ dotenv.config();
 
 import router from './routes';
 import cors from 'cors';
-// import connectDB from './database';
+import connectDB from './database';
 
-// connectDB();
+connectDB();
 
 const app: Express = express();
 const port = process.env.PORT || 9000;

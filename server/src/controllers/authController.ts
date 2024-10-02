@@ -18,6 +18,15 @@ const createUser = async (req: Request, res: Response) => {
   // Saving req data into a variable
   let data = req.body;
 
+  if(!data.userId||!data.name||!data.password) {
+    return res
+        .status(400)
+        .json({
+          success,
+          error: "Sorry, We need more detials :)",
+        });
+  }
+
   try {
 
     // Checking if user already exists

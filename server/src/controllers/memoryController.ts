@@ -8,7 +8,7 @@ import CustomRequest from "../types/CustomRequest";
 const REQ_URL = "https://api.mem0.ai/v1/memories/";
 const TOKEN = process.env.MEM0_TOKEN as string;
 
-const getMemory = async (req: CustomRequest, res: Response) => {
+const getMemory = async (req: Request, res: Response) => {
   let success = false;
 
   // Saving req data into a variable
@@ -16,10 +16,10 @@ const getMemory = async (req: CustomRequest, res: Response) => {
 
   try {
     // check if user exists
-      let user = await User.findById(req.user.id);
-      if (!user) {
-        return res.status(400).json({ success, error: "User not found!" });
-      }
+      // let user = await User.findById(req.user.id);
+      // if (!user) {
+      //   return res.status(400).json({ success, error: "User not found!" });
+      // }
     const options = {
       method: "GET",
       headers: { Authorization: TOKEN },
