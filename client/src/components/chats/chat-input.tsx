@@ -6,12 +6,13 @@ import { ChatQueryInterface } from "@/types/chat-type";
 import MemoryContext from "@/context/MemoryContext";
 
 const ChatInput = () => {
-  const { sendChat, selectedConversation } = useContext(ChatContext);
+  const { sendChat, selectedConversation, loadingChat } = useContext(ChatContext);
   const {getMemories} = useContext(MemoryContext);
 
   const textRef = useRef<HTMLInputElement>(null);
 
   const handleSend = async ()=>{
+    if(loadingChat) return;
     if(!textRef.current!.value) return;
     const item:ChatQueryInterface = {
         query: textRef.current!.value,
@@ -34,6 +35,7 @@ const ChatInput = () => {
         <Input
           ref={textRef}
           type="text"
+          disabled={loadingChat}
           placeholder="Type a message..."
           className="flex-1 mr-2 py-6 bg-white border border-gray-200 rounded-[6rem]"
         />
