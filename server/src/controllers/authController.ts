@@ -28,6 +28,16 @@ const createUser = async (req: Request, res: Response) => {
         });
   }
 
+  const userIdRegex = /^[a-z0-9]+$/;
+  if (!userIdRegex.test(data.userId)) {
+    return res
+      .status(400)
+      .json({
+        success,
+        error: "User ID must be in lowercase and should not contain spaces or special characters.",
+      });
+  }
+
   try {
 
     // Checking if user already exists

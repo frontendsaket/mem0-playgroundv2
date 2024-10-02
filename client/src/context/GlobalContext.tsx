@@ -6,6 +6,7 @@ const GlobalContext = createContext<any>({});
 const GlobalState = (props: any) => {
   
   const [logged, setLogged] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   const logout = ()=>{
     localStorage.removeItem("auth-token")
@@ -20,7 +21,7 @@ const GlobalState = (props: any) => {
   
 
   return (
-    <GlobalContext.Provider value={{logged, setLogged, logout}}>{props.children}</GlobalContext.Provider>
+    <GlobalContext.Provider value={{logged, progress, setProgress, setLogged, logout}}>{props.children}</GlobalContext.Provider>
   );
 };
 

@@ -16,6 +16,8 @@ const ChatState = (props: any) => {
   const [selectedProvider, setSelectedProvider] = useState<string>("OpenAI");
   const [selectedUserid, setSelectedUserid] = useState<string|null>(null);
 
+  // const {progress, setProgress} = useContext(GlobalContext);
+
 
   const getChats = async () => {
     try {

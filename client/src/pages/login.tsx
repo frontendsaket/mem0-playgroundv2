@@ -5,13 +5,14 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import GlobalContext from "@/context/GlobalContext"
 import { Link, useNavigate } from "react-router-dom"
+import { toast } from 'react-toastify';
 
 const url = import.meta.env.VITE_URL;
 
 export default function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const { logged, setLogged } = useContext(GlobalContext);
+  const { logged, setLogged, setProgress } = useContext(GlobalContext);
   const navigate = useNavigate();
 
   useEffect(()=>{
@@ -21,6 +22,7 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setProgress(40);
     // Handle login logic here
     const response = await fetch(`${url}/api/auth/login`, {
         method: "POST",
@@ -30,15 +32,15 @@ export default function Login() {
             password: password}
         ),
       });
-
+    setProgress(60);
     const data = await response.json();
-
+    setProgress(100);
     if(data.success){
         localStorage.setItem("auth-token", data.authtoken);
         setLogged(true);
         navigate("/")
     }else{
-        // ss
+        toast(data.error);
     }
   }
 

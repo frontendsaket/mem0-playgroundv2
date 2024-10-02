@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import GlobalContext from "@/context/GlobalContext"
 import { Link, useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 
 const url = import.meta.env.VITE_URL;
 
@@ -12,7 +13,7 @@ export default function Signup() {
   const [email, setEmail] = useState("")
   const [name, setName] = useState("")
   const [password, setPassword] = useState("")
-  const { logged } = useContext(GlobalContext);
+  const { logged, setProgress } = useContext(GlobalContext);
   const navigate = useNavigate();
 
   useEffect(()=>{
@@ -23,6 +24,7 @@ export default function Signup() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     // Handle login logic here
+    setProgress(20);
     const response = await fetch(`${url}/api/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -34,12 +36,14 @@ export default function Signup() {
         ),
       });
 
+    setProgress(80);
     const data = await response.json();
 
+    setProgress(100);
     if(data.success){
         navigate("/login")
     }else{
-        // ss
+        toast(data.error);
     }
   }
 
