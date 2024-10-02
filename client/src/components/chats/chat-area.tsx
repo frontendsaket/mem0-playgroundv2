@@ -18,7 +18,7 @@ const ChatArea = (props: {
   expandLeft: boolean;
   expandRight: boolean;
 }) => {
-  const { conversation, loadingChat, loadingQuestion, loadingSelectedChats, selectedUserid, setSelectedUserid } = useContext(ChatContext);
+  const { conversation,selectedConversation, loadingChat, deleteChat, loadingQuestion, loadingSelectedChats, selectedUserid, setSelectedUserid } = useContext(ChatContext);
 
   const textRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -67,7 +67,11 @@ const ChatArea = (props: {
           )}
         </Button>
         <div className="flex flex-col md:flex-row justify-end gap-2 md:gap-6 mt-2 mb-1 px-6 md:px-2">
-            <div className="flex">
+            <div className="flex gap-2">
+              {
+                conversation.length > 0 && !loadingChat && selectedConversation != ""&&<Button onClick={()=> deleteChat(selectedConversation)} className="bg-red-600 hover:bg-red-800">Delete Conversation</Button>
+              }
+              
               <input
                 className="border px-2 py-1 w-full border-gray-300 rounded-md pr-8 focus:outline-none"
                 placeholder="User Id"
