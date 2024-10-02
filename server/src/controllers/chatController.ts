@@ -41,7 +41,7 @@ const sendChat = async (req: CustomRequest, res: Response) => {
     // Search for memories 
     const searchMemoryOptions = {
       method: "POST",
-      headers: { Authorization: TOKEN, "Content-Type": "application/json" },
+      headers: { Authorization: TOKEN, "Content-Type": "application/json", "auth-token": req.authtoken },
       body: JSON.stringify({
         user_id: user.userId,
         query: query,
@@ -135,6 +135,7 @@ const sendChat = async (req: CustomRequest, res: Response) => {
       headers: {
         "Content-Type": "application/json",
         Authorization: TOKEN,
+        "auth-token": req.authtoken
       },
       body: JSON.stringify({
         user_id: user.userId,

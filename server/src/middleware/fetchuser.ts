@@ -20,7 +20,7 @@ const fetchuser = (req: Request, res: Response, next: NextFunction)=>{
     try{
     
     const data  = jwt.verify(token, JWT_SECRET) as UserPayload;
-    merge(req, {user: data.user});
+    merge(req, {user: data.user, authtoken: token });
     
     return next();
     }catch(error){

@@ -133,15 +133,21 @@ const updateMemory = async (req: CustomRequest, res: Response) => {
   }
 };
 
-const searchMemory = async (req: Request, res: Response) => {
+const searchMemory = async (req: CustomRequest, res: Response) => {
   let success = false;
-  let { user_id, query } = req.body;
+  let { query } = req.body;
   try {
+    // check if user exists
+    let user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(400).json({ success, error: "User not found!" });
+    }
+
     const options = {
       method: "POST",
       headers: { Authorization: TOKEN, "Content-Type": "application/json" },
       body: JSON.stringify({
-        user_id: user_id,
+        user_id: user.userId,
         query: query,
         top_k: 5,
       }),
