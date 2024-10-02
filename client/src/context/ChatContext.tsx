@@ -141,7 +141,8 @@ const ChatState = (props: any) => {
         selectedProvider,
         setSelectedProvider,
         selectedUserid,
-        setSelectedUserid
+        setSelectedUserid,
+        setConversation
       }}
     >
       {props.children}

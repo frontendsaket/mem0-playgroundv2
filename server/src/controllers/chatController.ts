@@ -2,12 +2,12 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import User from "../models/user";
-import { Request, Response } from "express";
-import { convertMessages, generateSessionId } from "../utils/helper";
+import { Response } from "express";
+import { generateSessionId } from "../utils/helper";
 import CustomRequest from "../types/CustomRequest";
 import Conversation from "../models/conversation";
 
-const TOKEN = process.env.MEM0_GAUTH_TOKEN as string;
+const TOKEN = process.env.MEM0_TOKEN as string;
 const SERVER = process.env.SERVER_URL as string;
 const openRouterApiKey = process.env.OPEN_ROUTER as string;
 
@@ -35,7 +35,7 @@ const sendChat = async (req: CustomRequest, res: Response) => {
 
     if (!session_id) {
       newItem = true;
-      session_id = await generateSessionId(TOKEN);
+      session_id = await generateSessionId();
     }
 
     // Search for memories

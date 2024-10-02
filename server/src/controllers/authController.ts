@@ -7,8 +7,9 @@ import User from "../models/user";
 
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+const TOKEN = process.env.MEM0_TOKEN as string;
 
-import { generateRandomString, generateSessionId, toTitleCase } from "../utils/helper";
+import { generateRandomString, toTitleCase } from "../utils/helper";
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
@@ -55,6 +56,8 @@ const createUser = async (req: Request, res: Response) => {
       agentId: generateRandomString(10)
     });
 
+    await addMemory(data.userId, data.name);
+
     success = true;
     return res.json({ success, info: "Account Created Successfully!!" });
   } catch (error) {
@@ -100,6 +103,31 @@ const loginUser = async (req: Request, res: Response) => {
     console.log(error);
     return res.json({ error: "Something Went Wrong!" });
   }
+};
+
+const addMemory = async (userid: string, name: string) => {
+  let messages = [{
+    role: "user",
+    content: `Hiii My name is ${name}`
+  },
+  {
+    role: "assistant",
+    content: `Hello, how are you ${name} ?`
+  }
+]
+  try {
+
+
+    const options = {
+      method: "POST",
+      headers: { Authorization: TOKEN, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user_id: userid,
+        messages: messages,
+      }),
+    };
+    await fetch(`https://api.mem0.ai/v1/memories/`, options);
+  } catch (error) {}
 };
 
 export { createUser, loginUser };

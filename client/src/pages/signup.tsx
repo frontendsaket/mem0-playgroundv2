@@ -69,7 +69,7 @@ export default function Signup() {
                 id="name"
                 type="text"
                 placeholder="Saket Aryan"
-                value={email}
+                value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
               />

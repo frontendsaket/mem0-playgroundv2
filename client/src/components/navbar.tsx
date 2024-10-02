@@ -2,14 +2,18 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { useContext } from "react";
 import GlobalContext from "@/context/GlobalContext";
+import ChatContext from "@/context/ChatContext";
 
 const Navbar = () => {
 
   const {logged, logout} = useContext(GlobalContext);
+  const {setSelectedConversation, setConversation} = useContext(ChatContext);
   const navigate = useNavigate();
 
   const handleLogout = ()=> {
     logout();
+    setSelectedConversation("");
+    setConversation([]);
     navigate("/login");
   }
 

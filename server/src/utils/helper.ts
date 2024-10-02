@@ -47,7 +47,7 @@ function convertMessages(data: MessageData[]): ConvertedMessage[] {
   return messages;
 }
 
-async function generateSessionId(TOKEN: string): Promise<string> {
+async function generateSessionId(): Promise<string> {
   let data = await Conversation.find({});
 
   const existingIds = data.map((session) => session.id);
