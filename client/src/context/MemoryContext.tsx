@@ -89,8 +89,34 @@ const MemoryState = (props: any) => {
     }
   };
 
+  const deleteMemories = async () => {
+    try {
+      setLoadingMemories(true);
+      const response = await fetch(`${url}/api/memories`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("auth-token") || "",
+        },
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        await getMemories();
+        return true;
+      } else {
+        setLoadingMemories(false);
+        return false;
+      }
+    } catch (error) {
+      setLoadingMemories(false);
+      console.log(error);
+      return false;
+    }
+  };
+
   return (
-    <MemoryContext.Provider value={{ getMemories, memories, updateMemory, deleteMemory, loadingMemories }}>
+    <MemoryContext.Provider value={{ getMemories, memories, updateMemory, deleteMemory,deleteMemories, loadingMemories }}>
       {props.children}
     </MemoryContext.Provider>
   );

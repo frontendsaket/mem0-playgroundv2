@@ -8,7 +8,7 @@ import { MemoryItemInterface } from "@/types/memory-types";
 import Spinner from "../shared/spinner";
 
 const Memories = (props: { expandLeft: boolean; expandRight: boolean }) => {
-  const {  getMemories, memories, loadingMemories } = useContext(MemoryContext);
+  const {  getMemories, memories, loadingMemories, deleteMemories } = useContext(MemoryContext);
 
   useEffect(()=>{
     getMemories();
@@ -29,13 +29,18 @@ const Memories = (props: { expandLeft: boolean; expandRight: boolean }) => {
                 Your Memories ({memories.length})
               </h3>
               <div className="flex gap-2 align-middle">
-                <IoReload onClick={()=>getMemories("saket")} size={20} className="my-auto cursor-pointer" />
-                <AiOutlineDelete size={20} className="my-auto cursor-pointer" />
+                <IoReload onClick={()=>getMemories()} size={20} className="my-auto cursor-pointer" />
+                <AiOutlineDelete onClick={()=> deleteMemories()} size={20} className="my-auto cursor-pointer" />
               </div>
             </div>
             {
               loadingMemories&&<div className="flex justify-center">
                 <Spinner />
+              </div>
+            }
+            {
+              !loadingMemories&&memories.length===0&&<div className="flex">
+              <h1 className="my-4 mx-auto font-semibold text-[14px]">No Memories Found</h1>
               </div>
             }
             <ScrollArea className="h-[calc(100vh-8rem)] overflow-scroll">

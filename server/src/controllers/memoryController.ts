@@ -96,6 +96,39 @@ const deleteMemory = async (req: CustomRequest, res: Response) => {
   }
 };
 
+const deleteMemories = async (req: CustomRequest, res: Response) => {
+  let success = false;
+  let { memoryid } = req.query;
+  try {
+    // check if user exists
+    let user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(400).json({ success, error: "User not found!" });
+    }
+
+    const options = {
+      method: "DELETE",
+      headers: { Authorization: TOKEN, "Content-Type": "application/json" },
+    };
+    const response = await fetch(
+      `https://api.mem0.ai/v1/memories/?user_id=${user.userId}`,
+      options
+    );
+    const data = await response.json();
+
+    if (data) {
+      success = true;
+      return res.json({ success, memory: data.message });
+    } else {
+      success = false;
+      return res.json({ success });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ success, error: "Internal Server Error!" });
+  }
+};
+
 const updateMemory = async (req: CustomRequest, res: Response) => {
   let success = false;
   let { memoryid, text } = req.body;
@@ -168,4 +201,4 @@ const searchMemory = async (req: CustomRequest, res: Response) => {
   } catch (error) {}
 };
 
-export { getMemory, addMemory, deleteMemory, updateMemory, searchMemory };
+export { getMemory, addMemory, deleteMemory, updateMemory, searchMemory, deleteMemories };
