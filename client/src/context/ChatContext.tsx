@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChatQueryInterface } from "@/types/chat-type";
 import { createContext, useState } from "react";
+import { toast } from "react-toastify";
 const ChatContext = createContext<any>({});
 const url = import.meta.env.VITE_URL;
 
@@ -16,7 +17,6 @@ const ChatState = (props: any) => {
   const [selectedProvider, setSelectedProvider] = useState<string>("OpenAI");
   const [selectedUserid, setSelectedUserid] = useState<string|null>(null);
 
-  // const {progress, setProgress} = useContext(GlobalContext);
 
 
   const getChats = async () => {
@@ -138,6 +138,7 @@ const ChatState = (props: any) => {
         setConversations([]);
         setConversation([])
         setLoadingChats(false);
+        toast("All Chats Deleted")
         return true;
       } else {
         setLoadingChats(false);
@@ -174,6 +175,7 @@ const ChatState = (props: any) => {
         setSelectedConversation("");
         setLoadingSelectedChats(false);
         await getChats();
+        toast("Chat Deleted!");
         return true;
       } else {
         setLoadingSelectedChats(false);

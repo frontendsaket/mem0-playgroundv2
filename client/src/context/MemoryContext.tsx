@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createContext, useState } from "react";
+import { toast } from "react-toastify";
 const MemoryContext = createContext<any>({});
 const url = import.meta.env.VITE_URL;
 
@@ -56,6 +57,7 @@ const MemoryState = (props: any) => {
 
       if (data.success) {
         await getMemories();
+        toast("Memory Updated!")
         return true;
       } else {
         return false;
@@ -79,6 +81,7 @@ const MemoryState = (props: any) => {
 
       if (data.success) {
         await getMemories();
+        toast("Memory Deleted!")
         return true;
       } else {
         return false;
@@ -103,6 +106,7 @@ const MemoryState = (props: any) => {
 
       if (data.success) {
         await getMemories();
+        toast("All Memories Deleted!")
         return true;
       } else {
         setLoadingMemories(false);

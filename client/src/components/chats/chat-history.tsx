@@ -106,7 +106,7 @@ const ChatHistory = (props: { expandLeft: boolean }) => {
             animate={{scale: 1}}
             transition={{duration: 0.2}}
             className="flex">
-            <Button onClick={deleteAllChats} className="mx-auto bg-red-600 hover:bg-red-800 my-3">Clear All Conversation</Button>
+            <Button onClick={deleteAllChats} className="mx-auto w-full bg-red-600 hover:bg-red-800 my-3">Clear All Conversation</Button>
             </motion.div>
           }
               <div className="border border-gray-300 rounded-lg  px-3 py-2 cursor-pointer hover:bg-gray-100">
