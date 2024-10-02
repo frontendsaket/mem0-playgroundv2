@@ -1,14 +1,14 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import User from "../models/user";
 import { Request, Response } from "express";
-import axios from "axios";
+import User from "../models/user";
+import CustomRequest from "../types/CustomRequest";
 
 const REQ_URL = "https://api.mem0.ai/v1/memories/";
-const TOKEN = process.env.MEM0_GAUTH_TOKEN as string;
+const TOKEN = process.env.MEM0_TOKEN as string;
 
-const getMemory = async (req: Request, res: Response) => {
+const getMemory = async (req: CustomRequest, res: Response) => {
   let success = false;
 
   // Saving req data into a variable
@@ -16,10 +16,10 @@ const getMemory = async (req: Request, res: Response) => {
 
   try {
     // check if user exists
-    //   let user = await User.findById(req.user.id);
-    //   if (!user) {
-    //     return res.status(400).json({ success, error: "User not found!" });
-    //   }
+      let user = await User.findById(req.user.id);
+      if (!user) {
+        return res.status(400).json({ success, error: "User not found!" });
+      }
     const options = {
       method: "GET",
       headers: { Authorization: TOKEN },
@@ -118,4 +118,30 @@ const updateMemory = async (req: Request, res: Response) => {
     }
   };
 
-export { getMemory, addMemory, deleteMemory, updateMemory };
+  const searchMemory = async (req: Request, res: Response) => {
+    let success = false;
+    let { user_id, query } = req.body;
+    try {
+      const options = {
+        method: "POST",
+        headers: { Authorization: TOKEN, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_id: user_id,
+          query: query,
+          top_k: 5
+        }),
+      };
+      const response = await fetch(`https://api.mem0.ai/v1/memories/search/`, options);
+      const data = await response.json();
+
+      if (data) {
+        success = true;
+        return res.json({ success, memories: data });
+      } else {
+        success = false;
+        return res.json({ success });
+      }
+    } catch (error) {}
+  };
+
+export { getMemory, addMemory, deleteMemory, updateMemory, searchMemory };

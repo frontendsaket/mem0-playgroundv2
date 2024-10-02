@@ -8,7 +8,7 @@ import User from "../models/user";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-import { generateSessionId, toTitleCase } from "../utils/helper";
+import { generateRandomString, generateSessionId, toTitleCase } from "../utils/helper";
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
@@ -43,6 +43,7 @@ const createUser = async (req: Request, res: Response) => {
       name: data.name,
       password: securedPassword,
       userId: data.userId,
+      agentId: generateRandomString(10)
     });
 
     success = true;
