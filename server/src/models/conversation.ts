@@ -10,10 +10,10 @@ const messageSchema = new mongoose.Schema({
 });
 
 const conversationSchema = new mongoose.Schema({
-  userId: { type: String, required: true, unique: true },
-  agentId: { type: String, unique: true },
+  userId: { type: String, required: true },
+  agentId: { type: String },
   id: {type: String, unique: true},
-  title: { type: String, unique: true },
+  title: { type: String },
   createdAt: { type: Date, default: Date.now },
   messages: [messageSchema]
 });

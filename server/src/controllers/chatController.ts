@@ -163,7 +163,7 @@ const sendChat = async (req: CustomRequest, res: Response) => {
     })
   
     success = true;
-    return res.json({ success, conversations: conversation, memories: updatedMemory });
+    return res.json({ success, conversations: conversation, memories: updatedMemory, newItem: newItem, session_id: session_id });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ success, error: "Internal Server Error!" });
@@ -184,6 +184,8 @@ const getConversations = async (req: CustomRequest, res: Response) => {
     if(!conversations){
       conversations = [];
     }
+
+    conversations.reverse()
 
     success = true;
     return res.json({ success, conversations: conversations });

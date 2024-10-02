@@ -104,7 +104,7 @@ const ChatState = (props: any) => {
         if(data.newItem){
           await getChats();
         }
-        return data.memoryUpdate;
+        return data.memories;
       } else {
         setLoadingChat(false);
         return false;
