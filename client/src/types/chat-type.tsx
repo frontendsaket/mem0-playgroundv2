@@ -1,8 +1,7 @@
 interface ChatItemInterface {
-  created_at: number;
+  createdAt: string;
   id: string;
   title: string;
-  updated_at: number;
 }
 
 interface ChatPairInterface {

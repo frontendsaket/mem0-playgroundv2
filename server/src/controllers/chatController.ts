@@ -163,7 +163,7 @@ const sendChat = async (req: CustomRequest, res: Response) => {
     })
   
     success = true;
-    return res.json({ success,message: message, memories: updatedMemory });
+    return res.json({ success, conversations: conversation, memories: updatedMemory });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ success, error: "Internal Server Error!" });

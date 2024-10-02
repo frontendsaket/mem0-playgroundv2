@@ -14,13 +14,13 @@ const ChatHistory = (props: { expandLeft: boolean }) => {
   }, []);
 
   const todayConversations = conversations.filter(
-    (item: ChatItemInterface) => getDateCategory(item.created_at) === "Today"
+    (item: ChatItemInterface) => getDateCategory(item.createdAt) === "Today"
   );
   const yesterdayConversations = conversations.filter(
-    (item: ChatItemInterface) => getDateCategory(item.created_at) === "Yesterday"
+    (item: ChatItemInterface) => getDateCategory(item.createdAt) === "Yesterday"
   );
   const olderConversations = conversations.filter(
-    (item: ChatItemInterface) => getDateCategory(item.created_at) === "Older"
+    (item: ChatItemInterface) => getDateCategory(item.createdAt) === "Older"
   );
 
   return (

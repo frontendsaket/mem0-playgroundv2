@@ -20,9 +20,14 @@ const ChatState = (props: any) => {
   const getChats = async () => {
     try {
       setLoadingChats(true);
-      const response = await fetch(`${url}/api/chats`);
+      const response = await fetch(`${url}/api/chats`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("auth-token") || "",
+        },
+      });
       const data = await response.json();
-
       if (data.success) {
         setConversations(data.conversations);
         setLoadingChats(false);
@@ -44,12 +49,19 @@ const ChatState = (props: any) => {
     try {
       setLoadingSelectedChats(true);
       setConversation([]);
-      const response = await fetch(`${url}/api/chat?session_id=${session_id}`);
+      const response = await fetch(`${url}/api/chat?session_id=${session_id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("auth-token") || "",
+          },
+        }
+      );
       const data = await response.json();
-
       if (data.success) {
         setLoadingSelectedChats(false);
-        setConversation(data.conversation);
+        setConversation(data.conversation.messages);
         setSelectedConversation(session_id);
         return true;
       } else {
@@ -76,14 +88,17 @@ const ChatState = (props: any) => {
   
       const response = await fetch(`${url}/api/chat`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("auth-token") || "",
+        },
         body: JSON.stringify(requestBody),
       });
   
       const data = await response.json();
-
+      console.log(data);
       if (data.success) {
-        setConversation(data.conversations);
+        setConversation(data.conversations.messages);
         setSelectedConversation(data.session_id);
         setLoadingChat(false);
         if(data.newItem){

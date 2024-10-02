@@ -12,8 +12,8 @@ function convertTimestampToCustomFormat(timestamp: number): string {
   return formattedDate;
 }
 
-const getDateCategory = (createdAt: number) => {
-    const conversationDate = DateTime.fromSeconds(createdAt);
+const getDateCategory = (createdAt: string) => {
+    const conversationDate = DateTime.fromISO(createdAt);
     const today = DateTime.local().startOf('day');
     const yesterday = today.minus({ days: 1 });
   
