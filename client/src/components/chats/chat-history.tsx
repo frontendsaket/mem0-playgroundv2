@@ -6,12 +6,13 @@ import { ChatItemInterface } from "@/types/chat-type";
 import { getDateCategory } from "@/utils/helpers";
 import Spinner from "../shared/spinner";
 import { Button } from "../ui/button";
+import {motion} from "framer-motion";
 
 const ChatHistory = (props: { expandLeft: boolean }) => {
-  const { getChats, conversations, newChat, loadingChats, deleteAllChats } = useContext(ChatContext);
+  const { getFirstChats, conversations, newChat, loadingChats, deleteAllChats } = useContext(ChatContext);
 
   useEffect(() => {
-    getChats();
+    getFirstChats();
   }, []);
 
   const todayConversations = conversations.filter(
@@ -97,11 +98,16 @@ const ChatHistory = (props: { expandLeft: boolean }) => {
                 </>
               )}
             </div>
-            <div className="px-2">
+            <div className="px-2 flex flex-col-reverse md:flex-col">
             {
-            !loadingChats&&conversations.length>0&&<div className="flex">
+            !loadingChats&&conversations.length>0&&
+            <motion.div
+            initial={{scale: 0}}
+            animate={{scale: 1}}
+            transition={{duration: 0.2}}
+            className="flex">
             <Button onClick={deleteAllChats} className="mx-auto bg-red-600 hover:bg-red-800 my-3">Clear All Conversation</Button>
-            </div>
+            </motion.div>
           }
               <div className="border border-gray-300 rounded-lg  px-3 py-2 cursor-pointer hover:bg-gray-100">
                 <div onClick={newChat} className="flex justify-center align-middle gap-4">

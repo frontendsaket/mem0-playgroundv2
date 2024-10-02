@@ -9,6 +9,7 @@ import { IoChatbubbleOutline, IoSettingsOutline } from "react-icons/io5";
 import { TfiThought } from "react-icons/tfi";
 import { AiOutlineDelete } from "react-icons/ai";
 import ChatContext from "@/context/ChatContext";
+import {motion} from "framer-motion";
 
 
 const Home = () => {
@@ -67,15 +68,23 @@ const Home = () => {
         </div>
 
         {showHistory && (
-          <div className="md:hidden absolute z-10 bg-white h-full">
+          <motion.div
+          initial={{x: -200}}
+          animate={{x: 0}}
+          transition={{duration: 0.2}}
+          className="md:hidden absolute z-10 bg-white h-full shadow-lg">
             <ChatHistory expandLeft={expandLeft} />
-          </div>
+          </motion.div>
         )}
 
         {showMemories && (
-          <div className="md:hidden absolute z-10 bg-white h-full right-0">
+          <motion.div
+          initial={{x: 200}}
+          animate={{x: 0}}
+          transition={{duration: 0.2}}
+          className="md:hidden absolute z-10 bg-white h-full right-0 shadow-lg">
             <Memories expandLeft={expandLeft} expandRight={expandRight} />
-          </div>
+          </motion.div>
         )}
 
         {/* Navigation Sidebar */}

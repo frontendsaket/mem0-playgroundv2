@@ -183,6 +183,10 @@ const ChatState = (props: any) => {
       return false;
     }
   };
+
+  const getFirstChats = ()=>{
+    if(conversations.length===0) getChats();
+  }
   
 
   return (
@@ -208,7 +212,8 @@ const ChatState = (props: any) => {
         setSelectedUserid,
         setConversation,
         deleteAllChats,
-        deleteChat
+        deleteChat,
+        getFirstChats
       }}
     >
       {props.children}

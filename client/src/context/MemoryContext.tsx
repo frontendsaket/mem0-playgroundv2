@@ -115,8 +115,12 @@ const MemoryState = (props: any) => {
     }
   };
 
+  const getFirstMemories = ()=>{
+    if(memories.length===0) getMemories();
+  }
+
   return (
-    <MemoryContext.Provider value={{ getMemories, memories, updateMemory, deleteMemory,deleteMemories, loadingMemories }}>
+    <MemoryContext.Provider value={{ getMemories,getFirstMemories, memories, updateMemory, deleteMemory,deleteMemories, loadingMemories }}>
       {props.children}
     </MemoryContext.Provider>
   );

@@ -8,10 +8,10 @@ import { MemoryItemInterface } from "@/types/memory-types";
 import Spinner from "../shared/spinner";
 
 const Memories = (props: { expandLeft: boolean; expandRight: boolean }) => {
-  const {  getMemories, memories, loadingMemories, deleteMemories } = useContext(MemoryContext);
+  const {  getFirstMemories, getMemories, memories, loadingMemories, deleteMemories } = useContext(MemoryContext);
 
   useEffect(()=>{
-    getMemories();
+    getFirstMemories();
   },[])
 
 
