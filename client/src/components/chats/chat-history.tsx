@@ -28,7 +28,7 @@ const ChatHistory = (props: { expandLeft: boolean }) => {
   return (
     <>
       <div
-        className={`bg-gray-50/50 flex flex-col-reverse md:flex-col h-full  justify-between py-4 transition-all duration-300 ${
+        className={`bg-gray-50/50 flex flex-col-reverse md:flex-col h-full justify-end  md:justify-between py-4 transition-all duration-300 ${
           props.expandLeft ? "w-16" : "w-64"
         }`}
       >
